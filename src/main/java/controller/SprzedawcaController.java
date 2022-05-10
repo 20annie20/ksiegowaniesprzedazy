@@ -29,11 +29,11 @@ public class SprzedawcaController {
     @GetMapping("/sprzedawcy")
     public ResponseEntity<List<Sprzedawca>> getAllSprzedawcy(@RequestParam(required = false) String nazwa) {
         try {
-            List<Sprzedawca> sprzedawcy = new ArrayList<Sprzedawca>();
+            List<Sprzedawca> sprzedawcy = new ArrayList<>();
             if (nazwa == null)
                 sprzedawcaRepository.findAll().forEach(sprzedawcy::add);
-            //else
-                //sprzedawcaRepository.findByNameContaining(nazwa).forEach(sprzedawcy::add);
+            else
+                sprzedawcaRepository.findByNazwaContaining(nazwa).forEach(sprzedawcy::add);
             if (sprzedawcy.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

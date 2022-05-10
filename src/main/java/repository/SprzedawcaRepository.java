@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SprzedawcaRepository extends JpaRepository<Sprzedawca, Long> {
     // TODO określić potrzebne metody, np. znajdowanie po fragmencie nazwy, adresie, itd.
-    //List<Sprzedawca> findByNameContaining(String nazwa);
-    //List<Sprzedawca> findByNIP(long nip);
+    List<Sprzedawca> findByNazwaContaining(String nazwa);
+    List<Sprzedawca> findByNIP(long nip);
 }

@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sprzedawca")
+@Table(name = "SPRZEDAWCY")
 public class Sprzedawca {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_sprzedawcy;
     @Column(name = "NAZWA")
     private String nazwa;
