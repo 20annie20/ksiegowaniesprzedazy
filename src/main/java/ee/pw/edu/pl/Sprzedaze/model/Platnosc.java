@@ -1,5 +1,7 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,15 +12,19 @@ public class Platnosc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     @Column(name = "SUMA_PLN")
     private BigDecimal sumaPln;
     @Column(name = "KWOTA_SLOWNIE")
     private String kwotaSlownie;
+    @NotNull
     @Column(name = "TERMIN_PLATNOSCI")
     @Temporal(TemporalType.DATE)
     private Date terminPlatnosci;
+    @NotNull
     @Column(name = "FORMA_PLATNOSCI")
     private boolean formaPlatnosci;
+    @NotNull
     @Column(name = "ILE_ZAPLACONO")
     private BigDecimal ileZaplacono;
     @OneToOne(mappedBy = "platnosc")

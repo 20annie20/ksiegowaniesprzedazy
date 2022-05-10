@@ -1,6 +1,7 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,14 +12,19 @@ public class Usluga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_uslugi;
+    @NotNull
     @Column(name = "NAZWA")
     private String nazwa;
+    @NotNull
     @Column(name = "JEDNOSTKA_MIARY")
     private String jednostka_miary;
+    @NotNull
     @Column(name = "ILOSC_JEDNOSTEK")
     private int ilosc_jednostek;
+    @NotNull
     @Column(name = "CENA_JEDNOSTKI")
     private BigDecimal cena_jednostki;
+    @NotNull
     @Column(name = "WARTOSC")
     private BigDecimal wartosc;
 

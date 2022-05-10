@@ -7,12 +7,56 @@
     <title></title>
 </head>
     <body>
-        <div align="center">
+        <div align="center" class="card py-5 px-3 mt-5 w-25">
             <h1>
                 Dodaj nowego sprzedawcę
             </h1>
-            <form th:action="@{/save}" method="post" th:object="${sprzedawca}">
-                <input >
+            <form action="#" th:action="@{/addSprzedawca}" method="post" th:object="${sprzedawca}">
+                <input type="text" th:field = "*{nazwa}" placeholder="Nazwa firmy, imię, nazwisko" class="form-control mb-4 col-4">
+                <input type="text" th:field = "*{adres}" placeholder="Adres" class="form-control mb-4 col-4">
+                <input type="text" th:field = "*{nip}" placeholder="Numer NIP" class="form-control mb-4 col-4" pattern="^((\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2})|(\d{3}[- ]\d{2}[- ]\d{2}[- ]\d{3}))$">
+                <input type="phone" th:field = "*{nrTelefonu}" placeholder="530-127-111" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" class="form-control mb-4 col-4">
+                <input type="email" th:field = "*{email}" placeholder="Email" class="form-control mb-4 col-4">
+                <input type="text" th:field = "*{nrKontaBank}" placeholder="Numer konta bankowego" class="form-control mb-4 col-4" value="__-____-____-____-____-____-____" data-mask="__-____-____-____-____-____-____">
+                <script type="text/javascript">
+                            Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
+                    function applyDataMask(field) {
+                        var mask = field.dataset.mask.split('');
+                        // For now, this just strips everything that's not a number
+                        function stripMask(maskedData) {
+                            function isDigit(char) {
+                                return /\d/.test(char);
+                            }
+                            return maskedData.split('').filter(isDigit);
+                        }
+
+                        // Replace `_` characters with characters from `data`
+                        function applyMask(data) {
+                            return mask.map(function(char) {
+                                if (char != '_') return char;
+                                if (data.length == 0) return char;
+                                return data.shift();
+                            }).join('')
+                        }
+
+                        function reapplyMask(data) {
+                            return applyMask(stripMask(data));
+                        }
+
+                        function changed() {
+                            var oldStart = field.selectionStart;
+                            var oldEnd = field.selectionEnd;
+
+                            field.value = reapplyMask(field.value);
+
+                            field.selectionStart = oldStart;
+                            field.selectionEnd = oldEnd;
+                        }
+
+                        field.addEventListener('click', changed)
+                        field.addEventListener('keyup', changed)
+                    }
+                </script>
                 <div class="panel-body">
                     <button type="submit" class="btn btn-success">Zapisz</button>
                     <a href="/" class="btn btn-warning">Anuluj</a>

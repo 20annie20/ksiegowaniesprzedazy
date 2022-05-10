@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class SprzedawcaController {
@@ -32,32 +33,18 @@ public class SprzedawcaController {
         model.addAttribute("sprzedawca", sprzedawca);
         return "formularzSprzedawcy";
     }
-    /*
+
     @PostMapping("/addSprzedawca")
-    public String save(Sprzedawca sprzedawca)
+    public String save(@ModelAttribute("sprzedawca") Sprzedawca sprzedawca)
     {
-        sprzedawcaService.(sprzedawca);
+        System.out.println(sprzedawca.getNazwa());
+        if(sprzedawca.getNazwa() == null || sprzedawca.getNazwa().equals(""))
+            return "redirect:/addSprzedawca";
+        // TODO add popup that sprzedawca name is invalid
+        // TODO validate input fields
+        sprzedawcaService.saveSprzedawca(sprzedawca);
         return "redirect:/";
     }
-
-    /*
-    @GetMapping("/sprzedawcy")
-    public ResponseEntity<List<Sprzedawca>> getAllSprzedawcy(@RequestParam(required = false) String nazwa) {
-        try {
-            List<Sprzedawca> sprzedawcy = new ArrayList<>();
-            if (nazwa == null)
-                sprzedawcaService.findAll().forEach(sprzedawcy::add);
-            else
-                sprzedawcaService.findByNazwaContaining(nazwa).forEach(sprzedawcy::add);
-            if (sprzedawcy.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(sprzedawcy, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 
     /*
     @GetMapping("/tutorials/{id}")
@@ -69,16 +56,7 @@ public class SprzedawcaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/tutorials")
-    public ResponseEntity<Tutorial> createTutorial(@RequestBody Tutorial tutorial) {
-        try {
-            Tutorial _tutorial = tutorialRepository
-                    .save(new Tutorial(tutorial.getTitle(), tutorial.getDescription(), false));
-            return new ResponseEntity<>(_tutorial, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
     @PutMapping("/tutorials/{id}")
     public ResponseEntity<Tutorial> updateTutorial(@PathVariable("id") long id, @RequestBody Tutorial tutorial) {
         Optional<Tutorial> tutorialData = tutorialRepository.findById(id);

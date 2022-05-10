@@ -1,5 +1,7 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,23 +15,28 @@ public class Sprzedawca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idSprzedawcy;
+    @NotNull
     @Column(name = "NAZWA")
     private String nazwa;
+    @NotNull
     @Column(name = "ADRES")
     private String adres;
+    @NotNull
     @Column(name = "NIP")
-    private long nip;
+    private String nip;
+    @NotNull
     @Column(name = "NR_TELEFONU")
     private String nrTelefonu;
     @Column(name = "EMAIL")
     private String email;
+    @NotNull
     @Column(name = "NR_KONTA_BANK")
-    private long nrKontaBank;
+    private String nrKontaBank;
 
     // konstruktor
     public Sprzedawca() {
     }
-    public Sprzedawca(String nazwa, String adres, long nip, String nrTelefonu, String email, long nrKontaBank) {
+    public Sprzedawca(String nazwa, String adres, String nip, String nrTelefonu, String email, String nrKontaBank) {
         this.nazwa = nazwa;
         this.adres = adres;
         this.nip = nip;
@@ -62,11 +69,11 @@ public class Sprzedawca {
         this.adres = adres;
     }
 
-    public long getNip() {
+    public String getNip() {
         return nip;
     }
 
-    public void setNip(long nip) {
+    public void setNip(String nip) {
         this.nip = nip;
     }
 
@@ -86,11 +93,11 @@ public class Sprzedawca {
         this.email = email;
     }
 
-    public long getNrKontaBank() {
+    public String getNrKontaBank() {
         return nrKontaBank;
     }
 
-    public void setNrKontaBank(long nrKontaBank) {
+    public void setNrKontaBank(String nrKontaBank) {
         this.nrKontaBank = nrKontaBank;
     }
 

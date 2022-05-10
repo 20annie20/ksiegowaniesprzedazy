@@ -1,5 +1,7 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class Nabywca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idNabywcy;
+    @NotNull
     @Column(name="NAZWA")
     private String nazwa;
     @Column(name = "ADRES")
