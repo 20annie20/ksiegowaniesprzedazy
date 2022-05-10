@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Sprzedawca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_sprzedawcy;
+    private long idSprzedawcy;
     @Column(name = "NAZWA")
     private String nazwa;
     @Column(name = "ADRES")
@@ -20,30 +20,30 @@ public class Sprzedawca {
     @Column(name = "NIP")
     private long nip;
     @Column(name = "NR_TELEFONU")
-    private String nr_telefonu;
+    private String nrTelefonu;
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "NR_KONTA_BANK")
-    private long nr_konta_bank;
+    private long nrKontaBank;
 
     // konstruktor
     public Sprzedawca() {
     }
-    public Sprzedawca(String nazwa, String adres, long nip, String nr_telefonu, String email, long nr_konta_bank) {
+    public Sprzedawca(String nazwa, String adres, long nip, String nrTelefonu, String email, long nrKontaBank) {
         this.nazwa = nazwa;
         this.adres = adres;
         this.nip = nip;
-        this.nr_telefonu = nr_telefonu;
+        this.nrTelefonu = nrTelefonu;
         this.email = email;
-        this.nr_konta_bank = nr_konta_bank;
+        this.nrKontaBank = nrKontaBank;
     }
 
-    public long getId_sprzedawcy() {
-        return id_sprzedawcy;
+    public long getIdSprzedawcy() {
+        return idSprzedawcy;
     }
 
-    public void setId_sprzedawcy(long id_sprzedawcy) {
-        this.id_sprzedawcy = id_sprzedawcy;
+    public void setIdSprzedawcy(long idSprzedawcy) {
+        this.idSprzedawcy = idSprzedawcy;
     }
 
     public String getNazwa() {
@@ -70,12 +70,12 @@ public class Sprzedawca {
         this.nip = nip;
     }
 
-    public String getNr_telefonu() {
-        return nr_telefonu;
+    public String getNrTelefonu() {
+        return nrTelefonu;
     }
 
-    public void setNr_telefonu(String nr_telefonu) {
-        this.nr_telefonu = nr_telefonu;
+    public void setNrTelefonu(String nrTelefonu) {
+        this.nrTelefonu = nrTelefonu;
     }
 
     public String getEmail() {
@@ -86,17 +86,17 @@ public class Sprzedawca {
         this.email = email;
     }
 
-    public long getNr_konta_bank() {
-        return nr_konta_bank;
+    public long getNrKontaBank() {
+        return nrKontaBank;
     }
 
-    public void setNr_konta_bank(long nr_konta_bank) {
-        this.nr_konta_bank = nr_konta_bank;
+    public void setNrKontaBank(long nrKontaBank) {
+        this.nrKontaBank = nrKontaBank;
     }
 
     @Override
     public String toString() {
-        return "Sprzedawca [id=" + id_sprzedawcy + ", nazwa=" + nazwa + ", adres=" + adres + ", NIP=" + nip + ", " +
-                "nr_tel=" + nr_telefonu + ", email=" + email + "nr_konta=" + nr_konta_bank + "]";
+        return "Sprzedawca [id=" + idSprzedawcy + ", nazwa=" + nazwa + ", adres=" + adres + ", NIP=" + nip + ", " +
+                "nr_tel=" + nrTelefonu + ", email=" + email + "nr_konta=" + nrKontaBank + "]";
     }
 }

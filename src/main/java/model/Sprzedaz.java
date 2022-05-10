@@ -3,7 +3,6 @@ package model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalTime;
 
 @Entity
@@ -11,7 +10,7 @@ import java.time.LocalTime;
 public class Sprzedaz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id_sprzedazy;
+    private long idSprzedazy;
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name = "id_sprzedawcy")
     @JsonIgnore
@@ -21,19 +20,19 @@ public class Sprzedaz {
     @JsonIgnore
     private Nabywca nabywca;
     @Column(name = "DATA_WYSTAWIENIA", columnDefinition = "DATE")
-    private LocalTime data_wystawienia;
+    private LocalTime dataWystawienia;
     @Column(name = "NR_RACHUNKU")
-    private long nr_rachunku;
+    private long nrRachunku;
     @OneToOne(mappedBy = "sprzedaz", cascade = CascadeType.ALL) //moze SPRZEDAZ
     @PrimaryKeyJoinColumn
     private Platnosc platnosc;
 
-        public long getId_sprzedazy() {
-                return id_sprzedazy;
+        public long getIdSprzedazy() {
+                return idSprzedazy;
         }
 
-        public void setId_sprzedazy(long id_sprzedazy) {
-                this.id_sprzedazy = id_sprzedazy;
+        public void setIdSprzedazy(long idSprzedazy) {
+                this.idSprzedazy = idSprzedazy;
         }
 
         public Sprzedawca getSprzedawca() {
@@ -52,20 +51,20 @@ public class Sprzedaz {
                 this.nabywca = nabywca;
         }
 
-        public LocalTime getData_wystawienia() {
-                return data_wystawienia;
+        public LocalTime getDataWystawienia() {
+                return dataWystawienia;
         }
 
-        public void setData_wystawienia(LocalTime data_wystawienia) {
-                this.data_wystawienia = data_wystawienia;
+        public void setDataWystawienia(LocalTime dataWystawienia) {
+                this.dataWystawienia = dataWystawienia;
         }
 
-        public long getNr_rachunku() {
-                return nr_rachunku;
+        public long getNrRachunku() {
+                return nrRachunku;
         }
 
-        public void setNr_rachunku(long nr_rachunku) {
-                this.nr_rachunku = nr_rachunku;
+        public void setNrRachunku(long nrRachunku) {
+                this.nrRachunku = nrRachunku;
         }
 
         public Platnosc getPlatnosc() {

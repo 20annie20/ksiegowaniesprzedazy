@@ -1,4 +1,12 @@
 package repository;
 
-public interface SprzedazRepository {
+import model.Sprzedaz;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalTime;
+import java.util.List;
+
+public interface SprzedazRepository extends JpaRepository<Sprzedaz, Long> {
+    List<Sprzedaz> findBySprzedawcaId(Long id);
+    List<Sprzedaz> findByDataWystawienia(LocalTime data);
 }

@@ -9,64 +9,64 @@ import java.time.LocalTime;
 public class Platnosc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_platnosci;
+    private long idPlatnosci;
     @Column(name = "SUMA_PLN")
-    private BigDecimal suma_pln;
+    private BigDecimal sumaPln;
     @Column(name = "KWOTA_SLOWNIE")
-    private String kwota_slownie;
+    private String kwotaSlownie;
     @Column(name = "TERMIN_PLATNOSCI")
-    private LocalTime termin_platnosci;
+    private LocalTime terminPlatnosci;
     @Column(name = "FORMA_PLATNOSCI")
-    private boolean forma_platnosci;
+    private boolean formaPlatnosci;
     @Column(name = "ILE_ZAPLACONO")
-    private BigDecimal ile_zaplacono;
+    private BigDecimal ileZaplacono;
 
-    public long getId_platnosci() {
-        return id_platnosci;
+    public long getIdPlatnosci() {
+        return idPlatnosci;
     }
 
-    public void setId_platnosci(long id_platnosci) {
-        this.id_platnosci = id_platnosci;
+    public void setIdPlatnosci(long idPlatnosci) {
+        this.idPlatnosci = idPlatnosci;
     }
 
-    public BigDecimal getSuma_pln() {
-        return suma_pln;
+    public BigDecimal getSumPln() {
+        return sumaPln;
     }
 
-    public void setSuma_pln(BigDecimal suma_pln) {
-        this.suma_pln = suma_pln;
+    public void setSumaPln(BigDecimal suma_pln) {
+        this.sumaPln = suma_pln;
     }
 
-    public String getKwota_slownie() {
-        return kwota_slownie;
+    public String getKwotaSlownie() {
+        return kwotaSlownie;
     }
 
-    public void setKwota_slownie(String kwota_slownie) {
-        this.kwota_slownie = kwota_slownie;
+    public void setKwotaSlownie(String kwotaSlownie) {
+        this.kwotaSlownie = kwotaSlownie;
     }
 
-    public LocalTime getTermin_platnosci() {
-        return termin_platnosci;
+    public LocalTime getTerminPlatnosci() {
+        return terminPlatnosci;
     }
 
-    public void setTermin_platnosci(LocalTime termin_platnosci) {
-        this.termin_platnosci = termin_platnosci;
+    public void setTerminPlatnosci(LocalTime terminPlatnosci) {
+        this.terminPlatnosci = terminPlatnosci;
     }
 
-    public boolean isForma_platnosci() {
-        return forma_platnosci;
+    public boolean isFormaPlatnosci() {
+        return formaPlatnosci;
     }
 
-    public void setForma_platnosci(boolean forma_platnosci) {
-        this.forma_platnosci = forma_platnosci;
+    public void setFormaPlatnosci(boolean formaPlatnosci) {
+        this.formaPlatnosci = formaPlatnosci;
     }
 
-    public BigDecimal getIle_zaplacono() {
-        return ile_zaplacono;
+    public BigDecimal getIleZaplacono() {
+        return ileZaplacono;
     }
 
-    public void setIle_zaplacono(BigDecimal ile_zaplacono) {
-        this.ile_zaplacono = ile_zaplacono;
+    public void setIleZaplacono(BigDecimal ileZaplacono) {
+        this.ileZaplacono = ileZaplacono;
     }
 
     public Platnosc getPlatnosc() {

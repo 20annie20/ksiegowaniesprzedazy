@@ -7,18 +7,18 @@ import javax.persistence.*;
 public class Nabywca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_nabywcy;
+    private long idNabywcy;
     @Column(name="NAZWA")
     private String nazwa;
     @Column(name = "ADRES")
     private String adres;
 
-    public long getId_nabywcy() {
-        return id_nabywcy;
+    public long getIdNabywcy() {
+        return idNabywcy;
     }
 
-    public void setId_nabywcy(long id_nabywcy) {
-        this.id_nabywcy = id_nabywcy;
+    public void setIdNabywcy(long idNabywcy) {
+        this.idNabywcy = idNabywcy;
     }
 
     public String getNazwa() {
