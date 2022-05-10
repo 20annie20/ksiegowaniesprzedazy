@@ -1,35 +1,54 @@
-package controller;
-import java.util.ArrayList;
+package ee.pw.edu.pl.Sprzedaze.controller;
+
+import ee.pw.edu.pl.Sprzedaze.model.Sprzedawca;
+import ee.pw.edu.pl.Sprzedaze.services.SprzedawcaService;
+import ee.pw.edu.pl.Sprzedaze.services.SprzedawcaServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-import model.Sprzedawca;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import repository.SprzedawcaRepository;
-
-@CrossOrigin(origins = "http://localhost:8081")
-@RestController
-@RequestMapping("/api")
-
+@Controller
 public class SprzedawcaController {
+
     @Autowired
-    SprzedawcaRepository sprzedawcaRepository;
+    SprzedawcaServiceImpl sprzedawcaService;
+
+    @RequestMapping("/")
+    public String index(Model model) {
+        System.out.println("Going to the main page");
+        final List<Sprzedawca> lista = sprzedawcaService.getAllSprzedawca();
+        System.out.println(lista);
+        model.addAttribute("listSprzedawca", lista);
+        return "index";
+    }
+
+    @RequestMapping("/addSprzedawca")
+    public String addSprzedawca(Model model) {
+        System.out.println("Idz do dodawania sprzedawcy");
+        Sprzedawca sprzedawca = new Sprzedawca();
+        model.addAttribute("sprzedawca", sprzedawca);
+        return "formularzSprzedawcy";
+    }
+    /*
+    @PostMapping("/addSprzedawca")
+    public String save(Sprzedawca sprzedawca)
+    {
+        sprzedawcaService.(sprzedawca);
+        return "redirect:/";
+    }
+
+    /*
     @GetMapping("/sprzedawcy")
     public ResponseEntity<List<Sprzedawca>> getAllSprzedawcy(@RequestParam(required = false) String nazwa) {
         try {
             List<Sprzedawca> sprzedawcy = new ArrayList<>();
             if (nazwa == null)
-                sprzedawcaRepository.findAll().forEach(sprzedawcy::add);
+                sprzedawcaService.findAll().forEach(sprzedawcy::add);
             else
-                sprzedawcaRepository.findByNazwaContaining(nazwa).forEach(sprzedawcy::add);
+                sprzedawcaService.findByNazwaContaining(nazwa).forEach(sprzedawcy::add);
             if (sprzedawcy.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -38,17 +57,8 @@ public class SprzedawcaController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/sprzedawcy")
-    public ResponseEntity<Sprzedawca> createSprzedawca(@RequestBody Sprzedawca sprzedawca) {
-        try {
-            Sprzedawca _sprzedawca = sprzedawcaRepository
-                    .save(new Sprzedawca(sprzedawca.getNazwa(), sprzedawca.getAdres(), sprzedawca.getNip(),
-                            sprzedawca.getNrTelefonu(), sprzedawca.getEmail(), sprzedawca.getNrKontaBank()));
-            return new ResponseEntity<>(_sprzedawca, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
+
     /*
     @GetMapping("/tutorials/{id}")
     public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") long id) {

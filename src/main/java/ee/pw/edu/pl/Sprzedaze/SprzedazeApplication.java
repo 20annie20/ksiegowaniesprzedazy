@@ -14,9 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"controller"})
-@EntityScan("model")
-@EnableJpaRepositories("repository")
+@ComponentScan({"ee/pw/edu/pl/Sprzedaze/controller", "ee/pw/edu/pl/Sprzedaze/services"})
+@EntityScan("ee/pw/edu/pl/Sprzedaze/model")
+@EnableJpaRepositories("ee/pw/edu/pl/Sprzedaze/repository")
 public class SprzedazeApplication {
 
 	public static void main(String[] args) {

@@ -1,32 +1,35 @@
-package model;
+package ee.pw.edu.pl.Sprzedaze.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "PLATNOSCI")
 public class Platnosc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idPlatnosci;
+    private long id;
     @Column(name = "SUMA_PLN")
     private BigDecimal sumaPln;
     @Column(name = "KWOTA_SLOWNIE")
     private String kwotaSlownie;
     @Column(name = "TERMIN_PLATNOSCI")
-    private LocalTime terminPlatnosci;
+    @Temporal(TemporalType.DATE)
+    private Date terminPlatnosci;
     @Column(name = "FORMA_PLATNOSCI")
     private boolean formaPlatnosci;
     @Column(name = "ILE_ZAPLACONO")
     private BigDecimal ileZaplacono;
+    @OneToOne(mappedBy = "platnosc")
+    private Sprzedaz sprzedaz;
 
     public long getIdPlatnosci() {
-        return idPlatnosci;
+        return id;
     }
 
     public void setIdPlatnosci(long idPlatnosci) {
-        this.idPlatnosci = idPlatnosci;
+        this.id = idPlatnosci;
     }
 
     public BigDecimal getSumPln() {
@@ -45,11 +48,11 @@ public class Platnosc {
         this.kwotaSlownie = kwotaSlownie;
     }
 
-    public LocalTime getTerminPlatnosci() {
+    public Date getTerminPlatnosci() {
         return terminPlatnosci;
     }
 
-    public void setTerminPlatnosci(LocalTime terminPlatnosci) {
+    public void setTerminPlatnosci(Date terminPlatnosci) {
         this.terminPlatnosci = terminPlatnosci;
     }
 
@@ -69,17 +72,5 @@ public class Platnosc {
         this.ileZaplacono = ileZaplacono;
     }
 
-    public Platnosc getPlatnosc() {
-        return platnosc;
-    }
-
-    public void setPlatnosc(Platnosc platnosc) {
-        this.platnosc = platnosc;
-    }
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id_platnosci")
-    private Platnosc platnosc;
 }
 

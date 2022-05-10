@@ -1,4 +1,4 @@
-package model;
+package ee.pw.edu.pl.Sprzedaze.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

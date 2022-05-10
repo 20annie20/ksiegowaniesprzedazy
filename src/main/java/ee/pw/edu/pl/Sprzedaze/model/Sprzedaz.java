@@ -1,9 +1,9 @@
-package model;
+package ee.pw.edu.pl.Sprzedaze.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "SPRZEDAZE")
@@ -12,19 +12,20 @@ public class Sprzedaz {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idSprzedazy;
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
-    @JoinColumn(name = "id_sprzedawcy")
+    @JoinColumn(name = "idSprzedawcy")
     @JsonIgnore
     private Sprzedawca sprzedawca;
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
-    @JoinColumn(name = "id_nabywcy")
+    @JoinColumn(name = "idNabywcy")
     @JsonIgnore
     private Nabywca nabywca;
     @Column(name = "DATA_WYSTAWIENIA", columnDefinition = "DATE")
-    private LocalTime dataWystawienia;
+    @Temporal(TemporalType.DATE)
+    private Date dataWystawienia;
     @Column(name = "NR_RACHUNKU")
     private long nrRachunku;
-    @OneToOne(mappedBy = "sprzedaz", cascade = CascadeType.ALL) //moze SPRZEDAZ
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_platnosci", referencedColumnName = "id")
     private Platnosc platnosc;
 
         public long getIdSprzedazy() {
@@ -51,11 +52,11 @@ public class Sprzedaz {
                 this.nabywca = nabywca;
         }
 
-        public LocalTime getDataWystawienia() {
+        public Date getDataWystawienia() {
                 return dataWystawienia;
         }
 
-        public void setDataWystawienia(LocalTime dataWystawienia) {
+        public void setDataWystawienia(Date dataWystawienia) {
                 this.dataWystawienia = dataWystawienia;
         }
 
