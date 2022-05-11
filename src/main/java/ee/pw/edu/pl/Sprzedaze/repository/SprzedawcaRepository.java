@@ -10,4 +10,5 @@ public interface SprzedawcaRepository extends JpaRepository<Sprzedawca, Long> {
     // TODO określić potrzebne metody, np. znajdowanie po fragmencie nazwy, adresie, itd.
     List<Sprzedawca> findByNazwaContaining(String nazwa);
     List<Sprzedawca> findByNip(long nip);
+    List<Sprzedawca> findByNazwa(String nazwa);
 }

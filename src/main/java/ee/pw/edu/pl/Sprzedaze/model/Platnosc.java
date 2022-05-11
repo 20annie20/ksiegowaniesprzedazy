@@ -1,6 +1,9 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
 import com.sun.istack.NotNull;
+import ee.pw.edu.pl.Sprzedaze.converter.BooleanToIntConverter;
+import ee.pw.edu.pl.Sprzedaze.converter.BooleanToStringConverter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -22,6 +25,7 @@ public class Platnosc {
     @Temporal(TemporalType.DATE)
     private Date terminPlatnosci;
     @NotNull
+    @Convert(converter = BooleanToIntConverter.class)
     @Column(name = "FORMA_PLATNOSCI")
     private boolean formaPlatnosci;
     @NotNull
@@ -62,10 +66,12 @@ public class Platnosc {
         this.terminPlatnosci = terminPlatnosci;
     }
 
+    @Type(type="yes_no")
     public boolean isFormaPlatnosci() {
         return formaPlatnosci;
     }
 
+    @Type(type="yes_no")
     public void setFormaPlatnosci(boolean formaPlatnosci) {
         this.formaPlatnosci = formaPlatnosci;
     }

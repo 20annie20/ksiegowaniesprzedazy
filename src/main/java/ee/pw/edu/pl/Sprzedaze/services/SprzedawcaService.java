@@ -8,4 +8,5 @@ import java.util.List;
 public interface SprzedawcaService {
     List<Sprzedawca> getAllSprzedawca();
     void saveSprzedawca(Sprzedawca sprzedawca);
+    Sprzedawca getSprzedawcaById(long id);
 }

@@ -17,13 +17,13 @@ public class Usluga {
     private String nazwa;
     @NotNull
     @Column(name = "JEDNOSTKA_MIARY")
-    private String jednostka_miary;
+    private String jednostkaMiary;
     @NotNull
     @Column(name = "ILOSC_JEDNOSTEK")
-    private int ilosc_jednostek;
+    private int iloscJednostek;
     @NotNull
     @Column(name = "CENA_JEDNOSTKI")
-    private BigDecimal cena_jednostki;
+    private BigDecimal cenaJednostki;
     @NotNull
     @Column(name = "WARTOSC")
     private BigDecimal wartosc;
@@ -44,28 +44,28 @@ public class Usluga {
         this.nazwa = nazwa;
     }
 
-    public String getJednostka_miary() {
-        return jednostka_miary;
+    public String getJednostkaMiary() {
+        return jednostkaMiary;
     }
 
-    public void setJednostka_miary(String jednostka_miary) {
-        this.jednostka_miary = jednostka_miary;
+    public void setJednostkaMiary(String jednostkaMiary) {
+        this.jednostkaMiary = jednostkaMiary;
     }
 
-    public int getIlosc_jednostek() {
-        return ilosc_jednostek;
+    public int getIloscJednostek() {
+        return iloscJednostek;
     }
 
-    public void setIlosc_jednostek(int ilosc_jednostek) {
-        this.ilosc_jednostek = ilosc_jednostek;
+    public void setIloscJednostek(int iloscJednostek) {
+        this.iloscJednostek = iloscJednostek;
     }
 
-    public BigDecimal getCena_jednostki() {
-        return cena_jednostki;
+    public BigDecimal getCenaJednostki() {
+        return cenaJednostki;
     }
 
-    public void setCena_jednostki(BigDecimal cena_jednostki) {
-        this.cena_jednostki = cena_jednostki;
+    public void setCenaJednostki(BigDecimal cenaJednostki) {
+        this.cenaJednostki = cenaJednostki;
     }
 
     public BigDecimal getWartosc() {

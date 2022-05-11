@@ -15,6 +15,8 @@ public class Nabywca {
     private String nazwa;
     @Column(name = "ADRES")
     private String adres;
+    @Column(name = "NIP")
+    private String nip;
 
     public long getIdNabywcy() {
         return idNabywcy;
@@ -40,14 +42,11 @@ public class Nabywca {
         this.adres = adres;
     }
 
-    public long getNip() {
+    public String getNip() {
         return nip;
     }
 
-    public void setNip(long nip) {
+    public void setNip(String nip) {
         this.nip = nip;
     }
-
-    @Column(name = "NIP")
-    private long nip;
 }
