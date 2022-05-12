@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class Usluga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_uslugi;
+    private long idUslugi;
     @NotNull
     @Column(name = "NAZWA")
     private String nazwa;
@@ -27,13 +27,17 @@ public class Usluga {
     @NotNull
     @Column(name = "WARTOSC")
     private BigDecimal wartosc;
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name = "idSprzedazy")
+    @JsonIgnore
+    private Sprzedaz sprzedaz;
 
-    public long getId_uslugi() {
-        return id_uslugi;
+    public long getIdUslugi() {
+        return idUslugi;
     }
 
-    public void setId_uslugi(long id_uslugi) {
-        this.id_uslugi = id_uslugi;
+    public void setIdUslugi(long idUslugi) {
+        this.idUslugi = idUslugi;
     }
 
     public String getNazwa() {
@@ -84,8 +88,7 @@ public class Usluga {
         this.sprzedaz = sprzedaz;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional=false)
-    @JoinColumn(name = "id_sprzedazy")
-    @JsonIgnore
-    private Sprzedaz sprzedaz;
+    public boolean isNew() {
+        return Long.valueOf(this.getIdUslugi()) == null;
+    }
 }

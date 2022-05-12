@@ -1,13 +1,14 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "SPRZEDAWCY")
@@ -15,21 +16,21 @@ public class Sprzedawca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idSprzedawcy;
-    @NotNull
+
+    @Size(min = 1, max = 256, message="Invalid name length")
+    @NotNull(message = "Name cannot be null")
     @Column(name = "NAZWA")
     private String nazwa;
-    @NotNull
+
+    // TODO add other fields validation constraints
     @Column(name = "ADRES")
     private String adres;
-    @NotNull
     @Column(name = "NIP")
     private String nip;
-    @NotNull
     @Column(name = "NR_TELEFONU")
     private String nrTelefonu;
     @Column(name = "EMAIL")
     private String email;
-    @NotNull
     @Column(name = "NR_KONTA_BANK")
     private String nrKontaBank;
 

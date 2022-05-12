@@ -34,7 +34,7 @@
                         <td th:text="${sprzedawca.adres}"></td>
                         <td th:text="${sprzedawca.nip}"></td>
                         <td class="float-right">
-                            <a class="btn btn-primary float-right" th:href="@{/addSprzedaz/{id}(id=${sprzedawca.idSprzedawcy})}">Twórz akt sprzedaży</a>
+                            <a class="btn btn-primary float-right" th:href="@{sprzedawca/{id}/addSprzedaz(id=${sprzedawca.idSprzedawcy})}">Twórz akt sprzedaży</a>
                         </td>
                     </tr>
                 </tbody>

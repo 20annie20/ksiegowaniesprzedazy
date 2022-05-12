@@ -8,9 +8,16 @@
 </head>
 <body>
 <div class="card my-10 px-5 mx-20 mt-5">
-    <center><h1>Formularz aktu sprzedaży</h1><br><br></center>
+    <div class="row justify-content-end">
+        <div class="col-7">
+            <h1>Formularz aktu sprzedaży</h1>
+        </div>
+        <div class="col-1">
+            <a href="/" class="btn btn-warning">Anuluj</a>
+        </div>
+    </div>
     <div class="bg-light">
-        <form action="#" th:action="@{/addSprzedaz/{id}(id=${sprzedawca.idSprzedawcy})}" method="post" th:object="${sprzedaz}">
+        <form action="#" th:action="@{/sprzedawca/{id}/addSprzedaz(id=${sprzedawca.idSprzedawcy})}" method="post" th:object="${sprzedaz}">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6">
@@ -55,13 +62,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div>
+                <h1 align="center"> Lista Usług </h1><br>
                 <div class="row"><br><br>
                     <div align="center" class="container px-4">
-                        <h1> Lista Usług </h1><br>
-                        <div class="row gy-5">
-                            <a class="btn btn-primary btn-lg" href="/addUsluga" role="button">Dodaj Usługę</a>
-                        </div>
-                        <table border="1" class = "table table-striped table-responsive-md">
+                        <table class = "table table-striped table-responsive-md">
                             <thead>
                             <tr>
                                 <th>Nazwa usługi</th>
@@ -69,10 +76,31 @@
                                 <th>Ilość szt</th>
                                 <th>Cena szt</th>
                                 <th>Lączna wartość</th>
+                                <th>Czynność</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="usluga : ${listUslugiForSprzedaz}">
+                            <tr>
+                                <td>input</td>
+                                <td>input</td>
+                                <td>input</td>
+                                <td>input</td>
+                                <td>input</td>
+                                <td>
+                                    <div align = "center" class="panel-body my-20">
+                                        <a th:href="@{/{id}/uslugi/new(id=${sprzedaz.idSprzedazy})}" class="btn btn-primary">Dodaj usługę</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div align="center" class="container px-4">
+                        <table border="1" class = "table table-striped table-responsive-md">
+                            <tbody>
+                            <tr th:each="usluga : ${listUsluga}">
                                 <td th:text="${usluga.nazwa}"></td>
                                 <td th:text="${usluga.jednostkaMiary}"></td>
                                 <td th:text="${usluga.iloscJednostek}"></td>
@@ -83,10 +111,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div align = "center" class="panel-body my-20">
-                <button type="submit" class="btn btn-success">Zapisz</button>
-                <a href="/" class="btn btn-warning">Anuluj</a>
             </div>
         </form>
     </div>
