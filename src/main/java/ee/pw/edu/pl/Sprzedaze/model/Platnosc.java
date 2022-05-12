@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import ee.pw.edu.pl.Sprzedaze.converter.BooleanToIntConverter;
 import ee.pw.edu.pl.Sprzedaze.converter.BooleanToStringConverter;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,6 +24,7 @@ public class Platnosc {
     @NotNull
     @Column(name = "TERMIN_PLATNOSCI")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date terminPlatnosci;
     @NotNull
     @Convert(converter = BooleanToIntConverter.class)
