@@ -18,9 +18,22 @@ public class Sprzedawca {
     private long idSprzedawcy;
 
     @Size(min = 1, max = 256, message="Invalid name length")
-    @NotNull(message = "Name cannot be null")
+    @NotNull(message = "Nazwa cannot be null")
     @Column(name = "NAZWA")
     private String nazwa;
+
+    public String getImieNazwisko() {
+        return imieNazwisko;
+    }
+
+    public void setImieNazwisko(String imieNazwisko) {
+        this.imieNazwisko = imieNazwisko;
+    }
+
+    @Size(min = 1, max = 256, message="Invalid name length")
+    @NotNull(message = "ImieNazwisko cannot be null")
+    @Column(name = "IMIENAZWISKO")
+    private String imieNazwisko;
 
     // TODO add other fields validation constraints
     @Column(name = "ADRES")
@@ -37,8 +50,9 @@ public class Sprzedawca {
     // konstruktor
     public Sprzedawca() {
     }
-    public Sprzedawca(String nazwa, String adres, String nip, String nrTelefonu, String email, String nrKontaBank) {
+    public Sprzedawca(String nazwa, String imieNazwisko, String adres, String nip, String nrTelefonu, String email, String nrKontaBank) {
         this.nazwa = nazwa;
+        this.imieNazwisko = imieNazwisko;
         this.adres = adres;
         this.nip = nip;
         this.nrTelefonu = nrTelefonu;

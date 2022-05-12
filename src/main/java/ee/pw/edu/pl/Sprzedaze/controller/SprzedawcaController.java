@@ -40,8 +40,6 @@ public class SprzedawcaController {
     @PostMapping("/addSprzedawca")
     public String save(@ModelAttribute("sprzedawca") Sprzedawca sprzedawca)
     {
-        System.out.println(sprzedawca.getNazwa());
-
         if(InputValidation.validateName(sprzedawca.getNazwa())){
             sprzedawcaService.saveSprzedawca(sprzedawca);
             return "redirect:/";

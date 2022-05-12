@@ -32,7 +32,7 @@ public class SprzedazeApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Sprzedawca sprzedawca = new Sprzedawca("Ann Sem FAJNAFIRMA", "Piękna 122, Warszawa", "12-123-123-12", "111-111-111", "example@gmail.com", "nrkontabankowegoshouldbevalidatedinapp");
+		Sprzedawca sprzedawca = new Sprzedawca("FAJNAFIRMA", "Ann Sem", "Piękna 122, Warszawa", "12-123-123-12", "111-111-111", "example@gmail.com", "nrkontabankowegoshouldbevalidatedinapp");
 		sprzedawcaRepository.save(sprzedawca);
 	}
 

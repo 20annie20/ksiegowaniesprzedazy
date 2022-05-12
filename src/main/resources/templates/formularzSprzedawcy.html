@@ -12,7 +12,8 @@
                 Dodaj nowego sprzedawcę
             </h1>
             <form action="#" th:action="@{/addSprzedawca}" method="post" th:object="${sprzedawca}">
-                <input type="text" th:field = "*{nazwa}" placeholder="Nazwa firmy, imię, nazwisko" class="form-control mb-4 col-4">
+                <input type="text" th:field = "*{nazwa}" placeholder="Nazwa firmy" class="form-control mb-4 col-4">
+                <input type="text" th:field = "*{imieNazwisko}" placeholder="Imię, nazwisko" class="form-control mb-4 col-4">
                 <input type="text" th:field = "*{adres}" placeholder="Adres" class="form-control mb-4 col-4">
                 <input type="text" th:field = "*{nip}" placeholder="Numer NIP" class="form-control mb-4 col-4" pattern="^((\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2})|(\d{3}[- ]\d{2}[- ]\d{2}[- ]\d{3}))$">
                 <input type="phone" th:field = "*{nrTelefonu}" placeholder="530-127-111" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" class="form-control mb-4 col-4">
