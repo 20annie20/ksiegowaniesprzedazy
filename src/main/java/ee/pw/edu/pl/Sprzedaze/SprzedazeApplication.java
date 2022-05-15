@@ -1,7 +1,9 @@
 package ee.pw.edu.pl.Sprzedaze;
 
 import ee.pw.edu.pl.Sprzedaze.model.Sprzedawca;
+import ee.pw.edu.pl.Sprzedaze.model.Sprzedaz;
 import ee.pw.edu.pl.Sprzedaze.repository.SprzedawcaRepository;
+import ee.pw.edu.pl.Sprzedaze.repository.SprzedazRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -32,7 +34,9 @@ public class SprzedazeApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Sprzedawca sprzedawca = new Sprzedawca("FAJNAFIRMA", "Ann Sem", "Piękna 122, Warszawa", "12-123-123-12", "111-111-111", "example@gmail.com", "nrkontabankowegoshouldbevalidatedinapp");
+		Sprzedawca sprzedawca = new Sprzedawca("FAJNAFIRMA", "Anna Semrau", "Piękna 122, Warszawa", "12-123-123-12", "111-111-111", "example@gmail.com", "47 2121 1009 0000 0002 3569 8741");
+		sprzedawcaRepository.save(sprzedawca);
+		sprzedawca = new Sprzedawca("FIRMA2", "Jan Kowalski", "ul. Długa 3, Bydgoszcz", "12-127-127-12", "131-123-171", "example2@gmail.com", "49 1020 2892 2276 3005 0000 0000");
 		sprzedawcaRepository.save(sprzedawca);
 	}
 

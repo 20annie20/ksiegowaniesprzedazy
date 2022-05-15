@@ -11,13 +11,8 @@ import java.util.List;
 public interface SprzedazRepository extends JpaRepository<Sprzedaz, Long> {
     List<Sprzedaz> findBySprzedawcaIdSprzedawcy(Long id);
 
-    List<Sprzedaz> findAllBydataWystawienia(Date data);
+    Sprzedaz findFirstByOrderByIdSprzedazyDesc();
 
-    List<Sprzedaz> findAllByDataWystawieniaBetween(
-            Date dataWystawieniaStart,
-            Date dataWystawieniaEnd);
-
-    @Query("select a from Sprzedaz a where a.dataWystawienia <= :dataWystawienia")
-    List<Sprzedaz> findAllWithDataWystawieniaBefore(
-            @Param("dataWystawienia") Date dataWystawienia);
+    @Query(value = "SELECT u FROM Sprzedaz u WHERE u.dataWystawienia BETWEEN ?1 AND ?2")
+    List<Sprzedaz> findByDataWystawieniaBetween(Date odKiedy, Date doKiedy);
 }

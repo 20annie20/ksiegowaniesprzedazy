@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,23 +17,30 @@ public class Platnosc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotNull
     @Column(name = "SUMA_PLN")
     private BigDecimal sumaPln;
+
+    @Size(min = 5, max = 1024, message="Niepoprawna wartość w polu: Kwota słownie.")
     @Column(name = "KWOTA_SLOWNIE")
     private String kwotaSlownie;
+
     @NotNull
     @Column(name = "TERMIN_PLATNOSCI")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date terminPlatnosci;
+
     @NotNull
     @Convert(converter = BooleanToIntConverter.class)
     @Column(name = "FORMA_PLATNOSCI")
     private boolean formaPlatnosci;
+
     @NotNull
     @Column(name = "ILE_ZAPLACONO")
     private BigDecimal ileZaplacono;
+
     @OneToOne(mappedBy = "platnosc")
     private Sprzedaz sprzedaz;
 
@@ -44,7 +52,7 @@ public class Platnosc {
         this.id = idPlatnosci;
     }
 
-    public BigDecimal getSumPln() {
+    public BigDecimal getSumaPln() {
         return sumaPln;
     }
 

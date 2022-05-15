@@ -1,15 +1,15 @@
 package ee.pw.edu.pl.Sprzedaze.controller;
 
 import ee.pw.edu.pl.Sprzedaze.InputValidation;
+import ee.pw.edu.pl.Sprzedaze.ReportGenerator;
 import ee.pw.edu.pl.Sprzedaze.model.*;
 import ee.pw.edu.pl.Sprzedaze.services.*;
+import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -37,26 +37,32 @@ public class SprzedazController {
     UslugaServiceImpl uslugaService;
 
     public static int idSprzedazy = 0;
+    public boolean newSale = true;
+    public DateRange tempDateRange = new DateRange();
 
     @RequestMapping(value="/addSprzedaz", method=RequestMethod.GET)
     public String addSprzedaz(@PathVariable(value = "id") long id, Model model) {
 
         Sprzedawca sprzedawca = sprzedawcaService.getSprzedawcaById(id);
-        model.addAttribute("sprzedawca",sprzedawca);
+        Date dataWystawienia = new Date();
+        model.addAttribute("sprzedawca", sprzedawca);
+        model.addAttribute("dataWystawienia", dataWystawienia);
 
-        Nabywca nabywca = new Nabywca();
-        Sprzedaz sprzedaz = new Sprzedaz();
-        Platnosc platnosc = new Platnosc();
+        Nabywca nabywca;
+        Sprzedaz sprzedaz;
+        Platnosc platnosc;
 
-        // TODO get rid of this id counter, it's not safe
-        if(idSprzedazy > 0)
-        {
+        if(newSale) {
+            nabywca = new Nabywca();
+            sprzedaz = new Sprzedaz();
+            platnosc = new Platnosc();
+            idSprzedazy += 1;
+        } else {
+            System.out.println("ID SPRZEDAZY: " + idSprzedazy);
             sprzedaz = sprzedazService.getSprzedazById(idSprzedazy);
             nabywca = nabywcaService.getNabywcaById(idSprzedazy);
             platnosc = platnoscService.getPlatnoscById(idSprzedazy);
         }
-        else
-            idSprzedazy++;
 
         nabywcaService.saveNabywca(nabywca);
         platnoscService.savePlatnosc(platnosc);
@@ -74,54 +80,94 @@ public class SprzedazController {
 
         model.addAttribute("usluga", usluga);
 
-        final List<Usluga> listaUslug = uslugaService.getAllUsluga();
+        final List<Usluga> listaUslug = uslugaService.getAllUslugaByIdSprzedazy(sprzedaz);
         model.addAttribute("listUsluga", listaUslug);
 
         final BigDecimal sumaWartosc = uslugaService.getSumWartoscWhereSprzedaz(sprzedaz);
         double suma = sumaWartosc.doubleValue();
+
         DecimalFormat f = new DecimalFormat("#0.00");
         model.addAttribute("sumaWartosc", f.format(suma) + " PLN");
+        newSale = true;
         return "formularzDowoduSprzedazy";
     }
 
     @RequestMapping(value="/addSprzedaz", method=RequestMethod.POST)
-    public String save(@ModelAttribute("nabywca") Nabywca nabywca,
-                       @ModelAttribute("sprzedaz")Sprzedaz sprzedaz,
-                       @ModelAttribute("platnosc") Platnosc platnosc,
+    public String save(@ModelAttribute("nabywca") Nabywca nabywcaData,
+                       @ModelAttribute("sprzedaz") Sprzedaz sprzedazData,
+                       @ModelAttribute("platnosc") Platnosc platnoscData,
                        Model model,
                        @PathVariable("id") long idSprzedawcy,
                        RedirectAttributes redirectAttributes) {
+        newSale = false;
+
+        platnoscService.updatePlatnosc(idSprzedazy, platnoscData);
+        nabywcaService.updateNabywca(idSprzedazy, nabywcaData);
+
+        Sprzedaz sprzedaz = sprzedazService.getSprzedazById(idSprzedazy);
+        Platnosc platnosc = platnoscService.getPlatnoscById(idSprzedazy);
+        final BigDecimal sumaWartosc = uslugaService.getSumWartoscWhereSprzedaz(sprzedaz);
+        platnosc.setSumaPln(sumaWartosc);
+        Nabywca nabywca = nabywcaService.getNabywcaById(idSprzedazy);
+
+        if(sprzedazData.getDataWystawienia() == null)
+        {
+            sprzedaz.setDataWystawienia(new Date());
+        }else
+            sprzedaz.setDataWystawienia(sprzedazData.getDataWystawienia());
+
+        String data = sprzedaz.getDataWystawienia().toString();
+        sprzedaz.setNrRachunku(idSprzedawcy + "/" +idSprzedazy + "/" + data.substring(data.lastIndexOf(" ") + 1));
+
+        sprzedaz.setPlatnosc(platnosc);
+
+        sprzedaz.setSprzedawca(sprzedawcaService.getSprzedawcaById(idSprzedawcy));
 
         String nabywcaNazwa = nabywca.getNazwa();
-        platnoscService.savePlatnosc(platnosc);
-        nabywcaService.saveNabywca(nabywca);
         if(InputValidation.validateName(nabywcaNazwa)){
-            nabywcaService.saveNabywca(nabywca);
             sprzedaz.setNabywca(nabywca);
-            sprzedaz.setSprzedawca(sprzedawcaService.getSprzedawcaById(idSprzedawcy));
-
-            if(sprzedaz.getDataWystawienia() == null)
-            {
-                sprzedaz.setDataWystawienia(new Date());
-            }
-            String data = sprzedaz.getDataWystawienia().toString();
-
-            sprzedaz.setNrRachunku(idSprzedawcy + "/" +idSprzedazy + "/" + data.substring(data.lastIndexOf(" ") + 1));
-            System.out.println(idSprzedawcy + " " + sprzedaz.getIdSprzedazy());
-            sprzedazService.saveSprzedaz(sprzedaz);
-            idSprzedazy = (int) sprzedaz.getIdSprzedazy();
-            return "redirect:/sprzedawca/{id}/addSprzedaz";
+        } else {
+            System.out.println("Popup invalid nabywca");
+            redirectAttributes.addFlashAttribute("message", "Nie podano nazwy nabywcy...");
         }
-        // TODO POPUP INVALID NABYWCA
-        System.out.println("Popup invalid nabywca");
-        redirectAttributes.addFlashAttribute("message", "Nie podano nazwy nabywcy...");
+        sprzedazService.saveSprzedaz(sprzedaz);
+        System.out.println("PO ZAPISANIU ID SPRZEDAZY: " + sprzedaz.getIdSprzedazy());
         return "redirect:/sprzedawca/{id}/addSprzedaz";
     }
 
-    @RequestMapping(value="/generate", method=RequestMethod.GET)
-    public String generateReport(){
+    @RequestMapping(value="/zestawienie", method=RequestMethod.GET)
+    public String generateSummary(@PathVariable(value = "id") long id,
+                                 Model model) throws Docx4JException {
+        Sprzedawca sprzedawca = sprzedawcaService.getSprzedawcaById(id);
+        DateRange dateRange = new DateRange();
+        dateRange.setDateFrom(new Date());
+        dateRange.setDateTo(new Date());
+        model.addAttribute("dateRange", dateRange);
+        model.addAttribute("sprzedawca", sprzedawca);
+        model.addAttribute("tempDateRange", tempDateRange);
+
+        List<Sprzedaz> listaSprzedazy;
+        if (tempDateRange.getDateFrom() == null || tempDateRange.getDateTo() == null){
+            listaSprzedazy = sprzedazService.getSprzedazByIdSprzedawcy(id);
+        } else {
+            listaSprzedazy = sprzedazService.getSprzedazByIdSprzedawcyBetweenDataWystawienia(tempDateRange.getDateFrom(),
+                    tempDateRange.getDateTo(), id);
+        }
+
+        model.addAttribute("listaSprzedazyZaOkres", listaSprzedazy);
         System.out.println("Redirecting to generate formularz");
-        return "redirect:/";
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.GenerateRaport(listaSprzedazy);
+        return "summary";
+    }
+
+    @RequestMapping(value="/zestawienie", method=RequestMethod.POST)
+    public String changeDateRange(@PathVariable(value = "id") long id,
+                                  @ModelAttribute("dateRange") DateRange dateRange,
+                                  Model model) {
+        tempDateRange.setDateTo(dateRange.getDateTo());
+        tempDateRange.setDateFrom(dateRange.getDateFrom());
+        return "redirect:/sprzedawca/{id}/zestawienie";
     }
 
 
@@ -132,15 +178,8 @@ public class SprzedazController {
                                  @ModelAttribute("platnosc") Platnosc platnosc,
                                  @PathVariable("idSprzedazy") Long id,
                                  HttpServletRequest request, Model model) {
+        newSale = false;
 
-        System.out.println(platnosc.isFormaPlatnosci());
-
-        Platnosc platnosc1 = platnoscService.getPlatnoscById(id);
-        platnosc1.setFormaPlatnosci(platnosc.isFormaPlatnosci());
-        platnoscService.savePlatnosc(platnosc1);
-
-        //nabywcaService.saveNabywca(nabywca);
-        //sprzedazService.saveSprzedaz(sprzedaz);
         // TODO refactor validation because this one is very messy
         if(usluga.getCenaJednostki() == null) {
             String referer = request.getHeader("Referer");
@@ -149,11 +188,11 @@ public class SprzedazController {
         }
 
         model.addAttribute("usluga", usluga);
-        sprzedaz = sprzedazService.getSprzedazById(id);
+
+        sprzedaz = sprzedazService.getSprzedazById(idSprzedazy);
         usluga.setSprzedaz(sprzedaz);
         usluga.setWartosc(usluga.getCenaJednostki().multiply(BigDecimal.valueOf(usluga.getIloscJednostek())));
 
-        sprzedazService.saveSprzedaz(sprzedaz);
         uslugaService.saveUsluga(usluga);
 
         String referer = request.getHeader("Referer");
@@ -161,8 +200,22 @@ public class SprzedazController {
         return "redirect:" + referer;
     }
 
-    @DeleteMapping("/{idUslugi}")
+    @DeleteMapping("sprzedaz/{idSprzedazy}/usunUsluga/{idUslugi}")
     public void deleteUsluga(@RequestParam("idUslugi") Long idUslugi) {
         uslugaService.deleteUslugaById(idUslugi);
+    }
+
+    @RequestMapping(value="/generate/{idSprzedazy}", method = RequestMethod.POST)
+    public String generateDokument(@PathVariable(value = "idSprzedazy") long idSprzedazy,
+                                   @PathVariable(value = "id") long id) throws Docx4JException {
+        Sprzedaz sprzedaz = sprzedazService.getSprzedazById(idSprzedazy);
+        Platnosc platnosc = platnoscService.getPlatnoscById(idSprzedazy);
+        Nabywca nabywca = nabywcaService.getNabywcaById(idSprzedazy);
+        Sprzedawca sprzedawca = sprzedawcaService.getSprzedawcaById(id);
+        List<Usluga> uslugaList = uslugaService.getAllUslugaByIdSprzedazy(sprzedaz);
+
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.GenerateDokumentSprzedazy(sprzedaz, platnosc, nabywca, sprzedawca, uslugaList);
+        return "redirect:/";
     }
 }

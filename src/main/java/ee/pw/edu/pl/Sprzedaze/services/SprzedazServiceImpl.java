@@ -6,6 +6,8 @@ import ee.pw.edu.pl.Sprzedaze.repository.SprzedazRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,8 @@ public class SprzedazServiceImpl implements SprzedazService{
     SprzedazRepository sprzedazRepository;
 
     @Override
-    public List<Sprzedaz> getAllSprzedaz() {
-        return sprzedazRepository.findAll();
+    public List<Sprzedaz> getSprzedazByIdSprzedawcy(Long id) {
+        return sprzedazRepository.findBySprzedawcaIdSprzedawcy(id);
     }
 
     @Override
@@ -35,5 +37,24 @@ public class SprzedazServiceImpl implements SprzedazService{
             throw new RuntimeException("Nie znaleziono sprzedazy o id= " + id);
         }
         return sprzedaz;
+    }
+
+    @Override
+    public Sprzedaz getLastSprzedaz() {
+        return sprzedazRepository.findFirstByOrderByIdSprzedazyDesc();
+    }
+
+    @Override
+    public List<Sprzedaz> getSprzedazByIdSprzedawcyBetweenDataWystawienia(Date odKiedy, Date doKiedy, Long id) {
+        // TODO change to SQL query
+        List<Sprzedaz> sprzedaze = sprzedazRepository.findByDataWystawieniaBetween(odKiedy, doKiedy);
+        List<Sprzedaz> sprzedazeWithId = new ArrayList<>();
+        for(Sprzedaz sprzedaz: sprzedaze) {
+            System.out.println(sprzedaz.getSprzedawca().getIdSprzedawcy());
+            if(sprzedaz.getSprzedawca().getIdSprzedawcy() == id){
+                sprzedazeWithId.add(sprzedaz);
+            }
+        }
+        return sprzedazeWithId;
     }
 }

@@ -42,9 +42,8 @@ public class UslugaServiceImpl implements UslugaService{
     }
 
     @Override
-    public List<Usluga> getAllUslugaByIdSprzedazy(long idSprzedazy) {
-        //TODO implement
-        return null;
+    public List<Usluga> getAllUslugaByIdSprzedazy(Sprzedaz sprzedaz) {
+        return uslugaRepository.findAllBySprzedaz(sprzedaz);
     }
 
     @Override

@@ -9,4 +9,7 @@ public interface PlatnoscService {
     List<Platnosc> getAllNabywca();
     void savePlatnosc(Platnosc platnosc);
     Platnosc getPlatnoscById(long id);
+
+    // TODO CHANGE TO MAPPER
+    void updatePlatnosc(long id, Platnosc platnosc);
 }

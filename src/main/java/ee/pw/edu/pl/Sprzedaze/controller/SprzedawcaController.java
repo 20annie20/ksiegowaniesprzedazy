@@ -24,7 +24,6 @@ public class SprzedawcaController {
     public String index(Model model) {
         System.out.println("Going to the main page");
         final List<Sprzedawca> lista = sprzedawcaService.getAllSprzedawca();
-        System.out.println(lista);
         model.addAttribute("listSprzedawca", lista);
         return "index";
     }
@@ -45,7 +44,7 @@ public class SprzedawcaController {
             return "redirect:/";
         }
         else {
-            System.out.println("Popup - sprzedawca o podanej nazwie istnieje, warto dopełnić resztę jego danych");
+            System.out.println("Sprzedawca o podanej nazwie istnieje");
             return "redirect:/addSprzedawca";
         }
     }

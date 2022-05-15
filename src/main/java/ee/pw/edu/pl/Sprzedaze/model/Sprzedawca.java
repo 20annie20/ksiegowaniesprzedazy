@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,33 +16,37 @@ public class Sprzedawca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idSprzedawcy;
 
-    @Size(min = 1, max = 256, message="Invalid name length")
-    @NotNull(message = "Nazwa cannot be null")
+    @Size(min = 1, max = 256, message="Niepoprawna wartość w polu: Nazwa.")
+    @NotNull(message = "Nazwa nie może być pusta")
     @Column(name = "NAZWA")
     private String nazwa;
 
-    public String getImieNazwisko() {
-        return imieNazwisko;
-    }
-
-    public void setImieNazwisko(String imieNazwisko) {
-        this.imieNazwisko = imieNazwisko;
-    }
-
-    @Size(min = 1, max = 256, message="Invalid name length")
-    @NotNull(message = "ImieNazwisko cannot be null")
+    @Size(min = 1, max = 256, message="Niepoprawna wartość w polu: Imię i nazwisko.")
+    @NotNull(message = "Podaj imię i nazwisko sprzedawcy")
     @Column(name = "IMIENAZWISKO")
     private String imieNazwisko;
 
-    // TODO add other fields validation constraints
+    @Size(min = 5, max = 256, message="Niepoprawna wartość w polu: Adres.")
+    @NotNull(message = "Podaj adres sprzedawcy")
     @Column(name = "ADRES")
     private String adres;
+
+    @Size(min=13, max=13, message="Niepoprawna wartość w polu: NIP.")
+    @NotNull(message = "Podaj NIP sprzedawcy")
     @Column(name = "NIP")
     private String nip;
+
+    @Size(min=11, max=11, message="Niepoprawna wartość w polu: Nr telefonu.")
+    @NotNull(message = "Podaj nr telefonu sprzedawcy")
     @Column(name = "NR_TELEFONU")
     private String nrTelefonu;
+
+    @Size(min=13, max=256, message="Niepoprawna wartość w polu: Email.")
     @Column(name = "EMAIL")
     private String email;
+
+    @Size(min=32, max=32, message="Niepoprawna wartość w polu: Nr konta bankowego.")
+    @NotNull(message = "Podaj nr konta bankowego sprzedawcy")
     @Column(name = "NR_KONTA_BANK")
     private String nrKontaBank;
 
@@ -58,6 +61,14 @@ public class Sprzedawca {
         this.nrTelefonu = nrTelefonu;
         this.email = email;
         this.nrKontaBank = nrKontaBank;
+    }
+
+    public String getImieNazwisko() {
+        return imieNazwisko;
+    }
+
+    public void setImieNazwisko(String imieNazwisko) {
+        this.imieNazwisko = imieNazwisko;
     }
 
     public long getIdSprzedawcy() {

@@ -8,4 +8,5 @@ public interface NabywcaService {
     List<Nabywca> getAllNabywca();
     void saveNabywca(Nabywca nabywca);
     Nabywca getNabywcaById(long id);
+    void updateNabywca(int idSprzedazy, Nabywca nabywca);
 }

@@ -28,4 +28,15 @@ public class PlatnoscServiceImpl implements PlatnoscService {
 
         return platnoscRepository.getById(id);
     }
+
+    @Override
+    public void updatePlatnosc(long id, Platnosc platnosc) {
+        Platnosc platnoscToUpdate = platnoscRepository.getById(id);
+        platnoscToUpdate.setSumaPln(platnosc.getSumaPln());
+        platnoscToUpdate.setKwotaSlownie(platnosc.getKwotaSlownie());
+        platnoscToUpdate.setTerminPlatnosci(platnosc.getTerminPlatnosci());
+        platnoscToUpdate.setFormaPlatnosci(platnosc.isFormaPlatnosci());
+        platnoscToUpdate.setIleZaplacono(platnosc.getIleZaplacono());
+        platnoscRepository.save(platnoscToUpdate);
+    }
 }

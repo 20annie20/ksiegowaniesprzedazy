@@ -1,9 +1,10 @@
 package ee.pw.edu.pl.Sprzedaze.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,21 +13,28 @@ public class Usluga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUslugi;
-    @NotNull
+
+    @Size(min = 1, max = 256, message="Niepoprawna wartość w polu: Nazwa.")
+    @NotNull(message = "Nazwa nie może być pusta")
     @Column(name = "NAZWA")
     private String nazwa;
+
     @NotNull
     @Column(name = "JEDNOSTKA_MIARY")
     private String jednostkaMiary;
+
     @NotNull
     @Column(name = "ILOSC_JEDNOSTEK")
     private int iloscJednostek;
+
     @NotNull
     @Column(name = "CENA_JEDNOSTKI")
     private BigDecimal cenaJednostki;
+
     @NotNull
     @Column(name = "WARTOSC")
     private BigDecimal wartosc;
+
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name = "idSprzedazy")
     @JsonIgnore

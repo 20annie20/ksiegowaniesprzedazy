@@ -5,9 +5,8 @@ import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "SPRZEDAZE")
@@ -15,21 +14,30 @@ public class Sprzedaz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idSprzedazy;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name = "idSprzedawcy")
-    @JsonIgnore
     private Sprzedawca sprzedawca;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name = "idNabywcy")
     @JsonIgnore
     private Nabywca nabywca;
+
+    @NotNull
     @Column(name = "DATA_WYSTAWIENIA", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataWystawienia;
+
     @NotNull
+    @Size(min = 8, max = 256, message="Niepoprawna wartość w polu: Numer rachunku.")
     @Column(name = "NR_RACHUNKU")
     private String nrRachunku;
+
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_platnosci", referencedColumnName = "id")
     private Platnosc platnosc;

@@ -3,6 +3,7 @@ package ee.pw.edu.pl.Sprzedaze.model;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "NABYWCY")
@@ -10,7 +11,9 @@ public class Nabywca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idNabywcy;
+
     @NotNull
+    @Size(min = 1, max = 256, message="Niepoprawna wartość w polu: Nazwa.")
     @Column(name="NAZWA")
     private String nazwa;
     @Column(name = "ADRES")
